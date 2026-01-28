@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Escacs {
     Scanner sc = new Scanner(System.in);
@@ -20,8 +21,10 @@ public class Escacs {
 
         String primerJugador;
         String segonJugador;
+        int decisio = 0;
         boolean guanyador = false;
         boolean partida = true;
+        int torn = 0;
 
         System.out.println("--------------Benvinguts al Joc d'Escacs!!!--------------");
 
@@ -30,20 +33,28 @@ public class Escacs {
         System.out.println("Quin es  el nom de jugador 2?");
         segonJugador = sc.nextLine();
 
-
-        do {
-        switch (segonJugador) {
-            case "1":
-                
-                break;
-        
-            default:
-                break;
-        }
+        quiComenca(primerJugador, segonJugador);
         assignacioPecesInici(tauler);
         mostrarTauler(tauler);
 
-        } while(partida);
+        do {
+        System.out.println("Siusplau introdueix la teva decisio: (1) Continuar 2) Rendirse");
+        decisio = llegirEnter();
+        }while(decisio < 1 || decisio > 2);
+
+        do{
+        switch (decisio) {
+            case 1:
+                
+                torn++;
+                break;
+            case 2:
+                System.out.println("El jugador s'ha rendit. Fi de la partida.");
+            default:
+                break;
+        }
+
+        } while(decisio != 2);
     }
     public void assignacioPecesInici(char[][] tauler) {
         for (int i = 0;i < 8;i++) {
@@ -80,16 +91,35 @@ public class Escacs {
 
     }
     public void mostrarTauler(char[][] tauler) {
-        System.out.println("  A B C D E F G H");
+        System.out.println("       A      B      C      D      E      F      G      H");
         for (int i = 0; i < 8; i++) {
             System.out.print((8 - i) + " | ");
             for (int j = 0; j < 8; j++) {
-                System.out.print(tauler[i][j] + " | ");
+                System.out.print(" |_" +tauler[i][j] + "_| ");
             }
             System.out.println((8 - i));
         }
-        System.out.println("  A B C D E F G H");
+        System.out.println("       A      B      C      D      E      F      G      H");
 
+    }
+    public void quiComenca(String primerJugador, String segonJugador) {
+        System.out.println("Qui comença la partida? ");
+
+    }
+    public int llegirEnter(){
+        int numero = 0;
+        boolean correcta = false;
+
+        while(!correcta)
+        try {
+            numero = sc.nextInt();
+            correcta = true;
+        }
+        catch(InputMismatchException err){
+            System.out.println("Has d'introduir un nombre enter");
+            sc.nextLine();
+        }
+        return numero;
     }
     
 }
