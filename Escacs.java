@@ -202,16 +202,50 @@ public class Escacs {
         return new int[]{fila, col};
     }
     public boolean movimentValid(char[][] t, int[] o, int[] d, boolean blanques) {
+        char p = t[o[0]][o[1]];
+        char dest = t[d[0]][d[1]];
 
+        if (p == '.') return false;
+        if (blanques && Character.isLowerCase(p)) return false;
+        if (!blanques && Character.isUpperCase(p)) return false;
+        if (dest != '.' && Character.isUpperCase(dest) == Character.isUpperCase(p)) return false;
+
+        switch (Character.toLowerCase(p)) {
+            case 'p': return movimentPeo(t, o, d, blanques);
+            case 't': return o[0] == d[0] || o[1] == d[1];
+            case 'c':
+                int f = Math.abs(o[0] - d[0]);
+                int c = Math.abs(o[1] - d[1]);
+                return (f == 2 && c == 1) || (f == 1 && c == 2);
+            case 'a': return Math.abs(o[0] - d[0]) == Math.abs(o[1] - d[1]);
+            case 'q': return o[0] == d[0] || o[1] == d[1] ||
+                             Math.abs(o[0] - d[0]) == Math.abs(o[1] - d[1]);
+            case 'k': return Math.abs(o[0] - d[0]) <= 1 && Math.abs(o[1] - d[1]) <= 1;
+        }
+        return false;
     }
     public void mourePeca(char[][] t, int[] o, int[] d, boolean blanques) {
-
+        if (t[d[0]][d[1]] != '.') {
+            if (blanques)
+                pecesNegresEliminades.add("" + t[d[0]][d[1]]);
+            else
+                pecesBlanquesEliminades.add("" + t[d[0]][d[1]]);
+        }
+        t[d[0]][d[1]] = t[o[0]][o[1]];
+        t[o[0]][o[1]] = '.';
     }
     public void mostrarCaptures() {
 
+        System.out.println("Peces blanques eliminades: " + pecesBlanquesEliminades);
+        System.out.println("Peces negres eliminades: " + pecesNegresEliminades);
+    
     }
     public void resumFinal() {
 
+        System.out.println("\n--- RESUM FINAL ---");
+        System.out.println("Moviments blanques: " + movimentsBlanques);
+        System.out.println("Moviments negres: " + movimentsNegres);
+    
     }
     public boolean movimentPeo(char[][] t, int[] o, int[] d, boolean blanques) {
 
