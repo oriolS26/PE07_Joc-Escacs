@@ -197,10 +197,12 @@ public class Escacs {
         return numero;
     }
     public int[] convertirCoordenades(String pos) {
-
+        int col = pos.charAt(0) - 'a';
+        int fila = 8 - Character.getNumericValue(pos.charAt(1));
+        return new int[]{fila, col};
     }
     public boolean movimentValid(char[][] t, int[] o, int[] d, boolean blanques) {
-        
+
     }
     public void mourePeca(char[][] t, int[] o, int[] d, boolean blanques) {
 
