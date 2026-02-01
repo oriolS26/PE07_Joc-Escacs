@@ -196,7 +196,7 @@ public class Escacs {
         }
         return numero;
     }
-    public int[] convertirCoordenades(String pos) {
+    public int[] convertirCoordenada(String pos) {
         int col = pos.charAt(0) - 'a';
         int fila = 8 - Character.getNumericValue(pos.charAt(1));
         return new int[]{fila, col};
