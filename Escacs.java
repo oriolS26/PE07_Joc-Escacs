@@ -4,6 +4,16 @@ import java.util.InputMismatchException;
 
 public class Escacs {
     Scanner sc = new Scanner(System.in);
+
+    String jugadorBlanques;
+    String jugadorNegres;
+
+    ArrayList<String> movimentsBlanques = new ArrayList<>();
+    ArrayList<String> movimentsNegres = new ArrayList<>();
+
+    ArrayList<String> pecesBlanquesEliminades = new ArrayList<>();
+    ArrayList<String> pecesNegresEliminades = new ArrayList<>();
+    
     public static void main(String[] args) {
         Escacs p = new Escacs();
         p.programa();
@@ -13,16 +23,9 @@ public class Escacs {
         int columna = 8;
         char [][] tauler = new char[fila][columna];
 
-        ArrayList<String> movimentsBlanques = new ArrayList<>();
-        ArrayList<String> movimentsNegres = new ArrayList<>();
-
-        ArrayList<String> pecesBlanquesEliminades = new ArrayList<>();
-        ArrayList<String> pecesNegresEliminades = new ArrayList<>();
-
         String primerJugador;
         String segonJugador;
         int decisio = 0;
-        boolean guanyador = false;
         boolean partida = true;
         int torn = 0;
 
@@ -33,28 +36,31 @@ public class Escacs {
         System.out.println("Quin es  el nom de jugador 2?");
         segonJugador = sc.nextLine();
 
+
         quiComenca(primerJugador, segonJugador);
         assignacioPecesInici(tauler);
         mostrarTauler(tauler);
 
-        do {
-        System.out.println("Siusplau introdueix la teva decisio: (1) Continuar 2) Rendirse");
-        decisio = llegirEnter();
-        }while(decisio < 1 || decisio > 2);
 
-        do{
-        switch (decisio) {
-            case 1:
-                
-                torn++;
-                break;
-            case 2:
-                System.out.println("El jugador s'ha rendit. Fi de la partida.");
-            default:
-                break;
-        }
+         while (partida) {
 
-        } while(decisio != 2);
+            do {
+                System.out.println("Siusplau introdueix la teva decisio: (1) Continuar 2) Rendirse");
+                decisio = llegirEnter();
+            } while(decisio < 1 || decisio > 2);
+
+            if (decisio == 2) {
+                System.out.println("El jugador s'ha rendit.");
+                System.out.println("Guanya " + (torn % 2 == 0 ? jugadorNegres : jugadorBlanques));
+                break;
+            }
+
+            boolean tornBlanques = (torn % 2 == 0);
+
+            System.out.println("Torn de " + (tornBlanques ? "les blanques: " + jugadorBlanques
+                                                         : "les negres: " + jugadorNegres));
+
+            sc.nextLine();
     }
     public void assignacioPecesInici(char[][] tauler) {
         for (int i = 0;i < 8;i++) {
@@ -103,8 +109,19 @@ public class Escacs {
 
     }
     public void quiComenca(String primerJugador, String segonJugador) {
-        System.out.println("Qui comença la partida? ");
+        int resultat = (int)(Math.random() * 2);
+        
+        if (resultat == 0) {
+            jugadorBlanques = primerJugador;
+            jugadorNegres = segonJugador;
+        }
+        else {
+            jugadorBlanques = segonJugador;
+            jugadorNegres = primerJugador;
+        }
 
+        System.out.println(jugadorBlanques + " comença amb les peces blanques.");
+        System.out.println(jugadorNegres + " comença amb les peces negres.");
     }
     public int llegirEnter(){
         int numero = 0;
