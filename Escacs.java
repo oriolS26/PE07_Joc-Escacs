@@ -250,12 +250,26 @@ public class Escacs {
     public boolean movimentPeo(char[][] t, int[] o, int[] d, boolean blanques) {
         int dir = blanques ? -1 : 1;
 
-        if (o[1] == d[1] && t[d[0]][d[1]] == '.' && d[0] == o[0] + dir)
-            return true;
+        if (o[1] == d[1] &&
+            t[d[0]][d[1]] == '.' &&
+            d[0] == o[0] + dir)
+            
+        return true;
 
-        if (Math.abs(d[1] - o[1]) == 1 && d[0] == o[0] + dir && t[d[0]][d[1]] != '.')
-            return true;
+        if (o[1] == d[1] &&
+            t[d[0]][d[1]] == '.' &&
+            t[o[0] + dir][o[1]] == '.' &&
+            ((blanques && o[0] == 6) || (!blanques && o[0] == 1)) &&
+            d[0] == o[0] + 2 * dir)
 
-        return false;
+        return true;
+
+        if (Math.abs(d[1] - o[1]) == 1 &&
+            d[0] == o[0] + dir &&
+            t[d[0]][d[1]] != '.')
+
+        return true;
+
+    return false;
     }
 }
