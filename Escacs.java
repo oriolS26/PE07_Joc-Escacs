@@ -49,18 +49,27 @@ public class Escacs {
                 decisio = llegirEnter();
             } while(decisio < 1 || decisio > 2);
 
+            boolean abandonar = false;
+
             if (decisio == 2) {
+                abandonar = true;
+                partida = false;
                 System.out.println("El jugador s'ha rendit.");
                 System.out.println("Guanya " + (torn % 2 == 0 ? jugadorNegres : jugadorBlanques));
-                break;
             }
 
-            boolean tornBlanques = (torn % 2 == 0);
+            if (!abandonar) {
 
-            System.out.println("Torn de " + (tornBlanques ? "les blanques: " + jugadorBlanques
-                                                         : "les negres: " + jugadorNegres));
+                boolean tornBlanques = (torn % 2 == 0);
 
-            sc.nextLine();
+                System.out.println("Torn de " + (tornBlanques
+                        ? "les blanques: " + jugadorBlanques
+                        : "les negres: " + jugadorNegres));
+
+                sc.nextLine();
+                System.out.print("Introdueix moviment (ex: e2 e4 o Abandonar): ");
+                String entrada = sc.nextLine().trim();
+
     }
     public void assignacioPecesInici(char[][] tauler) {
         for (int i = 0;i < 8;i++) {
