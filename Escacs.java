@@ -69,7 +69,56 @@ public class Escacs {
                 sc.nextLine();
                 System.out.print("Introdueix moviment (ex: e2 e4 o Abandonar): ");
                 String entrada = sc.nextLine().trim();
+                
+                boolean movimentProcessat = false;
 
+                if (entrada.equalsIgnoreCase("Abandonar")) {
+                    movimentProcessat = true;
+                    partida = false;
+                    System.out.println("El jugador ha abandonat.");
+                    System.out.println("Guanya " + (tornBlanques ? jugadorNegres : jugadorBlanques));
+                }
+
+                if (!movimentProcessat) {
+
+                    if (!entrada.matches("^[a-h][1-8] [a-h][1-8]$")) {
+                        System.out.println("FORMAT INCORRECTE");
+                        movimentProcessat = true;
+                    }
+
+                    if (!movimentProcessat) {
+
+                        String[] parts = entrada.split(" ");
+                        int[] origen = convertirCoordenada(parts[0]);
+                        int[] desti = convertirCoordenada(parts[1]);
+
+                        boolean valid = movimentValid(tauler, origen, desti, tornBlanques);
+
+                        if (!valid) {
+                            System.out.println("MOVIMENT NO PERMÈS");
+                            movimentProcessat = true;
+                        }
+
+                        if (!movimentProcessat) {
+
+                            mourePeca(tauler, origen, desti, tornBlanques);
+
+                            if (tornBlanques)
+                                movimentsBlanques.add(entrada);
+                            else
+                                movimentsNegres.add(entrada);
+
+                            mostrarTauler(tauler);
+                            mostrarCaptures();
+
+                            torn++;
+                        }
+                    }
+                }
+            }
+        }
+
+        resumFinal();
     }
     public void assignacioPecesInici(char[][] tauler) {
         for (int i = 0;i < 8;i++) {
@@ -147,5 +196,22 @@ public class Escacs {
         }
         return numero;
     }
-    
+    public int[] convertirCoordenades(String pos) {
+
+    }
+    public boolean movimentValid(char[][] t, int[] o, int[] d, boolean blanques) {
+        
+    }
+    public void mourePeca(char[][] t, int[] o, int[] d, boolean blanques) {
+
+    }
+    public void mostrarCaptures() {
+
+    }
+    public void resumFinal() {
+
+    }
+    public boolean movimentPeo(char[][] t, int[] o, int[] d, boolean blanques) {
+
+    }
 }
